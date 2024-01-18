@@ -13,6 +13,7 @@ public class PhoneFunction {
 	private List<PhoneDB> pList = new ArrayList<PhoneDB>();
 	private PhoneDB pDB;
 	private String name, ph, company, search;
+	private int num;
 	
 
 	public void phoneDBStart() {
@@ -35,14 +36,15 @@ public class PhoneFunction {
 
 			Reader fr = new FileReader("C:\\javaStudy\\PhoneDB.txt");
 			BufferedReader br = new BufferedReader(fr);
-
+			
 			while(true) {
 				String str = br.readLine();
+				num ++;
 				if(str == null) {
 					break;
 				}
 				String[] sArr = str.split(",");
-				pDB = new PhoneDB(sArr[0], sArr[1], sArr[2]);
+				pDB = new PhoneDB(num, sArr[0], sArr[1], sArr[2]);
 				pList.add(pDB);
 			}
 		} catch (Exception e) { }
@@ -51,7 +53,7 @@ public class PhoneFunction {
 
 	public void showList() {
 		for (int i = 0; i < pList.size(); i++) {
-			System.out.print((i+1) + ".  ");
+			System.out.print(pList.get(i).getNum() + ".  ");
 			pList.get(i).showInfo();
 		}
 	}
@@ -65,7 +67,8 @@ public class PhoneFunction {
 		System.out.print(">회사전화: ");
 		company = in.nextLine();
 		
-		pDB = new PhoneDB(name, ph, company);
+		num = pList.size() + 1;
+		pDB = new PhoneDB(num, name, ph, company);
 		pList.add(pDB);
 	}
 	
@@ -83,6 +86,7 @@ public class PhoneFunction {
 		search = in.nextLine();
 		for (int i = 0; i < pList.size(); i++) {
 			if((pList.get(i).getName()).contains(search)){
+				System.out.print(pList.get(i).getNum() + ".  ");
 				pList.get(i).showInfo();
 			}
 		}

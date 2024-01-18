@@ -8,11 +8,12 @@ public class PhoneDB {
 	private String name;
 	private String ph;
 	private String company;
+	private int num;
 	
 	
 	public PhoneDB() { }
-	public PhoneDB(String name, String ph, String company) {
-		super();
+	public PhoneDB(int num, String name, String ph, String company) {
+		this.num = num;
 		this.name = name;
 		this.ph = ph;
 		this.company = company;
@@ -37,9 +38,12 @@ public class PhoneDB {
 	public void setCompany(String company) {
 		this.company = company;
 	}
-	
-	
-	
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
+	}
 	public void showInfo() {
 		System.out.println(name + "\t" + ph + "\t" + company);
 	}
