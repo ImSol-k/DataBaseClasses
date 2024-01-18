@@ -10,16 +10,16 @@ import java.util.Scanner;
 public class PhoneApp {
 
 	public static void main(String[] args) throws Exception {
-		
+
 		PhoneFunction phone = new PhoneFunction();
-				
-		phone.phoneDBStart();	
-		phone.phoneRead();
-		
 		Scanner in = new Scanner(System.in);
 		String num;
 		boolean start = true;
-		
+
+		phone.phoneDBStart();	
+		phone.phoneRead();
+
+
 		while(start) {
 			System.out.println();
 			System.out.println("1.리스트  2.등록  3.삭제  4.검색  5.종료");
@@ -52,7 +52,7 @@ public class PhoneApp {
 				start = true;
 				break;
 			}
-			
+
 		}
 		
 		
