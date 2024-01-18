@@ -21,6 +21,7 @@ public class PhoneApp {
 			System.out.println("----------------------------------");
 			System.out.print(">메뉴번호 :");
 			num = in.nextLine();
+			
 			switch(num) {
 			case"1":
 				phone.showList();
@@ -49,9 +50,9 @@ public class PhoneApp {
 			}
 
 		}
-		
-		
-		
+
+
+
 		in.close();
 	}
 

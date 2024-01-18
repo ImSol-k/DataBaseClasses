@@ -53,7 +53,7 @@ public class PhoneFunction {
 
 	public void showList() {
 		for (int i = 0; i < pList.size(); i++) {
-			System.out.print(pList.get(i).getNum() + ".  ");
+			System.out.print((i+1) + ".  ");
 			pList.get(i).showInfo();
 		}
 	}
