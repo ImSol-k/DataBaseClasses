@@ -82,8 +82,7 @@ public class PhoneFunction {
 		System.out.print(">이름: ");
 		search = in.nextLine();
 		for (int i = 0; i < pList.size(); i++) {
-			String ns = pList.get(i).getName();
-			if(ns.contains(search));{
+			if((pList.get(i).getName()).contains(search)){
 				pList.get(i).showInfo();
 			}
 		}
