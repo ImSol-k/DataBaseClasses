@@ -40,12 +40,6 @@ public class PhoneDB {
 	
 	
 	
-	public void Add() {
-		
-	}
-	
-	
-	
 	public void showInfo() {
 		System.out.println(name + "\t" + ph + "\t" + company);
 	}
