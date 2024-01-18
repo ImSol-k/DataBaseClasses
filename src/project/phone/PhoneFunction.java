@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class PhoneFunction  {
+public class PhoneFunction {
 	
 	private Scanner in = new Scanner(System.in);
 	private List<PhoneDB> pList = new ArrayList<PhoneDB>();
 	private PhoneDB pDB;
-	private String num, name, ph, company, search;
+	private String name, ph, company, search;
 	
 
 	public void phoneDBStart() {
@@ -22,13 +22,13 @@ public class PhoneFunction  {
 		System.out.println();
 	}
 
-//	public String phoneStart() {
+	public void phoneStart() {
 //		System.out.println();
 //		System.out.println("1.리스트  2.등록  3.삭제  4.검색  5.종료");
 //		System.out.println("----------------------------------");
 //		System.out.print(">메뉴번호 :");
 //		num = in.nextLine();
-//	}
+	}
 	
 	public void phoneRead() {
 		try {
@@ -44,11 +44,8 @@ public class PhoneFunction  {
 				String[] sArr = str.split(",");
 				pDB = new PhoneDB(sArr[0], sArr[1], sArr[2]);
 				pList.add(pDB);
-				br.close();
 			}
-		} catch (Exception e) {
-			System.out.println(e);
-		}
+		} catch (Exception e) { }
 
 	}
 
