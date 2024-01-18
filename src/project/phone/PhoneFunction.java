@@ -12,7 +12,7 @@ public class PhoneFunction  {
 	private Scanner in = new Scanner(System.in);
 	private List<PhoneDB> pList = new ArrayList<PhoneDB>();
 	private PhoneDB pDB;
-	private String name, ph, company;
+	private String name, ph, company, search;
 	
 	public void phoneDBStart() {
 		System.out.println("*****************************************");
@@ -20,13 +20,13 @@ public class PhoneFunction  {
 		System.out.println("*****************************************");
 		System.out.println();
 	}
-	
+
 	public void phoneRead() {
 		try {
-			
+
 			Reader fr = new FileReader("C:\\javaStudy\\PhoneDB.txt");
 			BufferedReader br = new BufferedReader(fr);
-			
+
 			while(true) {
 				String str = br.readLine();
 				if(str == null) {
@@ -35,12 +35,14 @@ public class PhoneFunction  {
 				String[] sArr = str.split(",");
 				pDB = new PhoneDB(sArr[0], sArr[1], sArr[2]);
 				pList.add(pDB);
+				br.close();
 			}
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		
+
 	}
+
 	public void showList() {
 		for (int i = 0; i < pList.size(); i++) {
 			System.out.print((i+1) + ".  ");
@@ -70,10 +72,19 @@ public class PhoneFunction  {
 	}
 	
 	public void Search() {
+		System.out.println("<4.검색>");
+		System.out.print(">이름: ");
+		search = in.nextLine();
+		for (int i = 0; i < pList.size(); i++) {
+			String ns = pList.get(i).getName();
+			if(ns.contains(search));{
+				pList.get(i).showInfo();
+			}
+		}
 		
 	}
 	
-	public void Esc() {
+	public void phoneEnd() {
 		System.out.println();
 		System.out.println("*****************************************");
 		System.out.println("*\t\t감사합니다 \t\t\t*");

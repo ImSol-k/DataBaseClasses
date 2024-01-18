@@ -11,9 +11,7 @@ public class PhoneApp {
 
 	public static void main(String[] args) throws Exception {
 		
-		List<PhoneDB> pList = new ArrayList<PhoneDB>();
 		PhoneFunction phone = new PhoneFunction();
-		PhoneDB pDB;
 				
 		phone.phoneDBStart();	
 		phone.phoneRead();
@@ -32,28 +30,23 @@ public class PhoneApp {
 			case"1":
 				phone.showList();
 				start = true;
-				break;
-				
+				break;				
 			case"2":
 				phone.Add();
 				start = true;
-				break;
-				
+				break;				
 			case"3":
 				phone.Delete();
 				start = true;
-				break;
-				
+				break;				
 			case"4":
-				
+				phone.Search();
 				start = true;
-				break;
-				
+				break;				
 			case"5":
-				phone.Esc();
+				phone.phoneEnd();
 				start = false;
-				break;
-				
+				break;				
 			default:
 				System.out.println("[다시 입력해 주세요.]");
 				start = true;
