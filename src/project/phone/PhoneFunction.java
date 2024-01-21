@@ -96,7 +96,7 @@ public class PhoneFunction {
 	public void phoneEnd() {
 		System.out.println();
 		System.out.println("*****************************************");
-		System.out.println("*\t\t감사합니다 \t\t\t*");
+		System.out.println("*\t\t감사합니다 \t\t*");
 		System.out.println("*****************************************");
 	}
 	

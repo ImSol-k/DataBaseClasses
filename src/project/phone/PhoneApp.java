@@ -8,7 +8,7 @@ public class PhoneApp {
 
 		PhoneFunction phone = new PhoneFunction();
 		Scanner in = new Scanner(System.in);
-		String num;
+		int num;
 		boolean start = true;
 
 		phone.phoneDBStart();	
@@ -20,26 +20,27 @@ public class PhoneApp {
 			System.out.println("1.리스트  2.등록  3.삭제  4.검색  5.종료");
 			System.out.println("----------------------------------");
 			System.out.print(">메뉴번호 :");
-			num = in.nextLine();
+			num = in.nextInt();
+			in.nextLine();
 			
 			switch(num) {
-			case"1":
+			case 1:
 				phone.showList();
 				start = true;
 				break;				
-			case"2":
+			case 2:
 				phone.Add();
 				start = true;
 				break;				
-			case"3":
+			case 3:
 				phone.Delete();
 				start = true;
 				break;				
-			case"4":
+			case 4:
 				phone.Search();
 				start = true;
 				break;				
-			case"5":
+			case 5:
 				phone.phoneEnd();
 				start = false;
 				break;				
