@@ -1,11 +1,11 @@
 # 명령에 커서대고 ctrl+Enter - 해당명령실행
-
+begin;
 -- use 사용명령어, hrdb 이름
 use hrdb;
+end;
 
-#################################################################
-# select문(조회)
-begin; # from절
+# select문
+begin; #from절
 select * from employees;
 select * from departments;
 select * from locations;
@@ -53,7 +53,7 @@ select employee_id '사 번',
 from employees;
 end;
 
-begin; # 산술연산자
+begin; #산술연산자
 select first_name,
        salary as 월급,
        salary - 100 '월급 - 식대',
@@ -101,7 +101,7 @@ from dual;
 select start_date, end_date from job_history;
 end;
 
-begin; # where 절
+begin; #where 절
 select first_name, 
        department_id
 from employees
@@ -206,7 +206,7 @@ from employees
 where first_name like '__a_';
 end;
 
-begin; # null
+begin; #null
 select first_name name, 
        salary, 
        commission_pct
@@ -250,7 +250,7 @@ from employees
 where department_id is null;
 end;
 
-begin; # Order by 절
+begin; #Order by 절
 -- 정렬
 select * from employees;
 
@@ -302,4 +302,21 @@ order by hire_date asc;
 
 end;
 
+begin; #단일행 숫자 함수
+# round
+select round(123.123, 2),
+       round(123.126, 2)
+from dual;
+
+-- from 제외가능
+select round(123.123, 2),
+       round(123.126, 2),
+       round(123.567, 0),
+       round(123.345, -1),
+       round(163.345, -2);
+       
+#seil
+
+#floor
+end;
  
