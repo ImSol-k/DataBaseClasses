@@ -5,8 +5,7 @@ use hrdb;
 
 #################################################################
 # select문(조회)
-#################################################################
-# from절
+begin; # from절
 select * from employees;
 select * from departments;
 select * from locations;
@@ -52,8 +51,9 @@ select employee_id '사 번',
        email 이메일,
        hire_date 입사일
 from employees;
+end;
 
--- 산술연산자 사용
+begin; # 산술연산자
 select first_name,
        salary as 월급,
        salary - 100 '월급 - 식대',
@@ -99,10 +99,9 @@ from dual;
 
 -- 연습
 select start_date, end_date from job_history;
+end;
 
-#################################################################
-# where 절
-#################################################################
+begin; # where 절
 select first_name, 
        department_id
 from employees
@@ -205,9 +204,9 @@ where first_name like '___a%';
 select concat(first_name, '  ', last_name) name
 from employees
 where first_name like '__a_';
+end;
 
-# null
-
+begin; # null
 select first_name name, 
        salary, 
        commission_pct
@@ -249,5 +248,58 @@ select first_name,
        salary
 from employees
 where department_id is null;
+end;
 
+begin; # Order by 절
+-- 정렬
+select * from employees;
 
+select first_name, 
+       salary
+from employees
+order by salary asc;
+
+select first_name, 
+       hire_date,
+       salary
+from employees
+order by hire_date asc,
+         salary asc;
+
+-- 예제 
+select * from employees;
+-- 부서번호를 오름차순으로 정렬하고 부서번호, 월급, 이름 출력
+select department_id,
+       salary,
+       first_name
+from employees
+order by department_id asc;
+-- 월급이 10000이상인 직원의 이름 월급을 월급이 큰직원부터 출력
+select first_name,
+       salary
+from employees
+where salary >= 10000
+order by salary desc;
+-- 부서번호를 오름차순으로 정렬하고 부서번호가 같으면 월급이 높은사람부터 부서번호, 월급, 이름 출력
+select department_id,
+       salary,
+       first_name
+from employees
+order by department_id asc,
+		 salary desc;
+-- 직원의 이름, 급여, 입사일을 이름의 알파벳 올림차순으로 출력
+select first_name,
+       salary,
+       hire_date
+from employees
+order by first_name asc;
+-- 직원의 이름, 급여, 입사일을 입사일이 빠른사람부터 출력
+select first_name,
+       salary,
+       hire_date
+from employees
+order by hire_date asc;
+
+end;
+
+ 
