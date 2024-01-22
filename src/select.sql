@@ -5,6 +5,8 @@ use hrdb;
 end;
 
 # select문
+begin;
+
 begin; #from절
 select * from employees;
 select * from departments;
@@ -259,9 +261,9 @@ select first_name,
 from employees
 order by salary asc;
 
-select first_name, 
-       hire_date,
-       salary
+select  first_name 
+       ,hire_date
+       ,salary
 from employees
 order by hire_date asc,
          salary asc;
@@ -288,35 +290,196 @@ from employees
 order by department_id asc,
 		 salary desc;
 -- 직원의 이름, 급여, 입사일을 이름의 알파벳 올림차순으로 출력
-select first_name,
-       salary,
-       hire_date
+select  first_name
+       ,salary
+       ,hire_date
 from employees
 order by first_name asc;
 -- 직원의 이름, 급여, 입사일을 입사일이 빠른사람부터 출력
-select first_name,
-       salary,
-       hire_date
+select  first_name
+       ,salary
+       ,hire_date
 from employees
 order by hire_date asc;
 
 end;
 
-begin; #단일행 숫자 함수
-# round
-select round(123.123, 2),
-       round(123.126, 2)
+end; #select문
+
+#단일행 숫자 함수
+begin;
+
+ begin; # round, from, ceil, floor
+###### round (반올림)
+select  round(123.123, 2)
+       ,round(123.126, 2)
 from dual;
 
 -- from 제외가능
-select round(123.123, 2),
-       round(123.126, 2),
-       round(123.567, 0),
-       round(123.345, -1),
-       round(163.345, -2);
+select  round(123.123, 2)
+       ,round(123.126, 2)
+       ,round(123.567, 0)
+       ,round(123.345, -1)
+       ,round(163.345, -2);
        
-#seil
+###### ceil (올림)
+select  ceil(123.12343)
+       ,ceil(123.896)
+       ,ceil(123.345)
+       ,ceil(165.14)
+from dual;
 
-#floor
+###### floor (내림)
+select  floor(123.12343)
+       ,floor(123.896)
+       ,floor(123.345)
+       ,floor(163.345)
+from dual;
 end;
+
+ begin; # truncate
+###### truncate 
+-- 소수점 n자리까지 표현
+select  truncate(123.12343, 2)
+       ,truncate(123.896, 1)
+       ,truncate(123.345, 0)
+       ,truncate(163.345, -2)
+from dual;
+
+select concat(first_name, '  ', last_name) name,
+       truncate(salary, 0) salary
+from employees
+order by salary asc;
+end;
+
+ begin; # power / pow, sqrt
+###### power / pow 
+-- 숫자의n승
+select pow(12, 2);
+select power(12, 2);
+
+###### sqrt 
+-- 숫자의제곱근
+select  sqrt(144)
+       ,truncate(sqrt(633), 0)
+from dual;
+end;
+
+ begin; # sing, abs
+###### sign 
+-- 음수양수표시
+select  sign(23)
+       ,sign(-23)
+       ,sign(0);
+
+###### abs
+-- 절대값
+select abs(123)
+      ,abs(0)
+      ,abs(-123);
+end;
+
+ begin; # greatest, least
+ ###### greatest 
+-- 괄호안의 값중 가장 큰 값
+select greatest(23, 3, 231);
+select greatest('A', 'C', 'c');
+
+###### least 
+-- 괄호안의 값중 가장 작은 값
+select least(3, 0, 23)
+	  ,least(234,-23,0)
+      ,least('a', 34);
+end;
+ 
+ begin; #응용
+ -- id중 가장 큰 수 출력
+ select employee_id
+       ,manager_id
+       ,department_id
+       ,greatest(employee_id, manager_id, department_id)
+ from employees; 
+  -- id중 가장 작은 수 출력
+ select employee_id
+       ,manager_id
+       ,department_id
+       ,least(employee_id, manager_id, department_id)
+ from employees; 
+ 
+ -- salary중 가장 큰 수 출력
+ select max(salary)
+ from employees; 
+ -- salary중 가장 작은 수 출력
+  select min(salary)
+ from employees; 
+ 
+ end;
+
+end; #단일행함수
+
+# 문자함수
+begin;
+
+ begin; #concat, concat_ws
+ ##### cancat 문자열 연결
+ select concat('-', first_name, last_name, salary)
+ from employees;
+ ##### ws 문자열을 제일 앞글자에 선언된 문자로 연결
+  select concat_ws('-', first_name, last_name, salary)
+ from employees;
+ end; #concat, concat_ws
+ 
+ begin; # lcase/lower, ucase/upper
+ ##### lcase/lower
+ -- 모든 대문자를 소문자로 변환
+ select first_name
+       ,lcase(first_name)
+       ,lower(first_name)
+ from employees;
+ 
+ ##### ucase/upper
+ -- 모든 소문자를 대문자로 변환
+  select first_name
+       ,ucase(first_name)
+       ,upper(first_name)
+ from employees;
+ 
+ end;
+ 
+ begin; #length, char_length / character_length
+ 
+ ##### length
+ -- 문자열의 길이를 byte로 반환
+ select first_name
+       ,length(first_name)
+ from employees;
+ 
+ ##### char_length / character_length
+ -- 문자열의 길이를 반환
+ select first_name
+       ,char_length(first_name)
+       ,character_length(first_name)
+ from employees;
+ 
+ end;
+ 
+ begin; #substring / substr
+ -- 문자열, n번째글자부터, n번째 글자까지
+ -- 같은숫자 입력으로 글자수 지정도 가능
+ -- 음수입력하면 뒤에서부터
+ 
+ select first_name
+       ,substr(first_name, 1,3)
+       ,substr(first_name, 2,2) 
+       ,substr(first_name, -3,2) 
+       ,substr(first_name, 3,2) 
+ from employees
+ where department_id = 100;
+ 
+ select substr('990523-2345678', 8, 1);
+ select substr('990523-2345678', -7, 1);
+ 
+ end;
+ 
+ end; #문자함수
  
