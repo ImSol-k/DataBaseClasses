@@ -308,7 +308,7 @@ end; #select문
 
 #단일행 숫자 함수
 begin;
-
+-- 올림 반올림
  begin; # round, from, ceil, floor
 ###### round (반올림)
 select  round(123.123, 2)
@@ -337,6 +337,7 @@ select  floor(123.12343)
 from dual;
 end;
 
+-- 소수점자리수 표현
  begin; # truncate
 ###### truncate 
 -- 소수점 n자리까지 표현
@@ -352,6 +353,7 @@ from employees
 order by salary asc;
 end;
 
+-- 숫자의n승, 제곱근
  begin; # power / pow, sqrt
 ###### power / pow 
 -- 숫자의n승
@@ -365,6 +367,7 @@ select  sqrt(144)
 from dual;
 end;
 
+-- 음수양수, 절대값
  begin; # sing, abs
 ###### sign 
 -- 음수양수표시
@@ -379,6 +382,7 @@ select abs(123)
       ,abs(-123);
 end;
 
+-- 값들중 가장 큰 값, 작은값
  begin; # greatest, least
  ###### greatest 
 -- 괄호안의 값중 가장 큰 값
@@ -420,6 +424,7 @@ end; #단일행함수
 # 문자함수
 begin;
 
+-- 문자열 연결
  begin; #concat, concat_ws
  ##### cancat 문자열 연결
  select concat('-', first_name, last_name, salary)
@@ -429,6 +434,7 @@ begin;
  from employees;
  end; #concat, concat_ws
  
+ -- 대소문자 변환
  begin; # lcase/lower, ucase/upper
  ##### lcase/lower
  -- 모든 대문자를 소문자로 변환
@@ -446,6 +452,7 @@ begin;
  
  end;
  
+ -- 문자열 길이 반환
  begin; #length, char_length / character_length
  
  ##### length
@@ -463,6 +470,7 @@ begin;
  
  end;
  
+ -- 문자열 자르기
  begin; #substring / substr
  -- 문자열, n번째글자부터, n번째 글자까지
  -- 같은숫자 입력으로 글자수 지정도 가능
@@ -481,5 +489,146 @@ begin;
  
  end;
  
+ -- 문자열 공백설정
+ begin; #LPAD, RPAD
+ # lpad(왼쪽)
+ -- 문자열 길이 설정, 공백에 문자출력
+ select first_name
+       ,lpad(first_name, 10,'0') 
+ from employees;
+ #rpad(오른쪽)
+ select first_name
+       ,rpad(first_name, 10,'0') 
+ from employees;
+ 
+ end;
+ 
+ -- 공백자르기
+ begin; #trim, ltrin, rtrim
+ 
+ select concat('|', '     안녕하세요     ', '|') no
+	   ,concat('|', trim('      안녕하세요      '),'|') trim
+       ,concat('|', rtrim('      안녕하세요      '),'|') rtrim
+       ,concat('|', ltrim('      안녕하세요      '),'|') ltrim;
+ 
+ end;
+ 
+ -- 문자변경
+ begin; # replace
+ -- 문자변경(문자열, 바꿀문자, 바뀔문자)
+ select first_name name
+       ,replace(first_name,'a', '*') 'replace'
+       ,replace(first_name, substr(first_name, 2, 4), '***') lpad
+ from employees
+ where department_id = 100;
+ end;
+ 
  end; #문자함수
+ 
+# 날짜/시간함수
+begin;
+
+-- 시간, 날짜
+begin; # current_date, time, timestamp
+-- 현재날짜
+select current_date(), curdate();
+-- 현재시간
+select current_time(), curtime();
+-- 현재 날짜와 시간
+select current_timestamp(), now();
+
+end;
+
+-- 시간, 날짜 더하기 빼기
+begin; # adddate/date_add, subdate/datesub
+
+select '2021-06-20 00:00:00:00' date
+      ,adddate('2021-06-20 00:00:00:00', interval 1 year) 'interval 1 year'
+      ,adddate('2021-06-20 00:00:00:00', interval 1 month) 'interval 1 month'
+      ,adddate('2021-06-20 00:00:00:00', interval 1 week) 'interval 1 week'
+      ,adddate('2021-06-20 00:00:00:00', interval 1 day) 'interval 1 day'
+      ,adddate('2021-06-20 00:00:00:00', interval 1 hour) 'interval 1 hour'
+      ,adddate('2021-06-20 00:00:00:00', interval 1 minute) 'interval 1 minute'
+      ,adddate('2021-06-20 00:00:00:00', interval 1 second) 'interval 1 second';
+      
+select '2021-06-20 00:00:00:00' date
+      ,subdate('2021-06-20 00:00:00:00', interval 1 year) 'interval 1 year'
+      ,subdate('2021-06-20 00:00:00:00', interval 1 month) 'interval 1 month'
+      ,subdate('2021-06-20 00:00:00:00', interval 1 week) 'interval 1 week'
+      ,subdate('2021-06-20 00:00:00:00', interval 1 day) 'interval 1 day'
+      ,subdate('2021-06-20 00:00:00:00', interval 1 hour) 'interval 1 hour'
+      ,subdate('2021-06-20 00:00:00:00', interval 1 minute) 'interval 1 minute'
+      ,subdate('2021-06-20 00:00:00:00', interval 1 second) 'interval 1 second';
+end;
+
+-- 일수차, 시간차 구하기
+begin; #datediff, timediff
+-- datediff (일수차)
+-- timediff (시간차)
+select datediff('2021-06-21 01:05:05', '2021-06-20 01:00:00')
+      ,timediff('2021-06-20 01:05:05', '2021-06-20 01:00:00');
+
+select first_name
+      ,hire_date
+      ,round(datediff(now(), hire_date)/365, 1) year
+from employees
+order by hire_date desc;
+
+end;
+
+end;
+ 
+ # 변환함수
+ begin;
+ 
+ -- 날짜 > 문자열
+ begin; # datefomat
+ select now() now
+       ,date_format(now(), '%Y / %m / %d  %H:%i:%s') format
+       ,date_format(now(), '%Y-(%b)%m/(%a)%d  %h:%i:%s(%p)')format;
+ end;
+ 
+ -- 문자열 > 날짜
+ begin; #str_to_date
+ -- 
+select datediff('2021-06-21 01:05:05', '2021-06-20 01:00:00') dateDiff;
+select str_to_date('2021-jun-21', '%Y-%b-%d') strToDate;
+ select datediff(str_to_date('2021-Jun-24', '%Y-%b-%d'), str_to_date('2021-06-20', '%Y-%m-%d')) dateDiff;
+ 
+ end;
+ 
+ -- 숫자에 , 추가 소수점 n자리까지 출력
+ begin; #format
+ 
+ select concat(format(1234567.89, 0), ' 원')
+			  ,format(1234567.89, 2)
+              ,format(1234567.89, - 2);
+ 
+ 
+ end;
+ 
+ -- expression을 type형식으로 변환
+ begin; #cast
+ 
+ select cast(1234567.89 as char);
+ 
+ end;
+ 
+ -- 컬럼의 값이 null일때 정해진 값 출력
+ begin; #ifnull
+ 
+ select first_name
+       ,commission_pct
+       ,ifnull(commission_pct, 0) ifnull
+ from employees
+ order by ifnull;
+ 
+  select first_name
+       ,commission_pct
+       ,ifnull(commission_pct, '없음') ifnull
+ from employees
+ 
+ end;
+ 
+ end;
  
