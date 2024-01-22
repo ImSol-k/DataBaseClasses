@@ -102,6 +102,7 @@ select start_date, end_date from job_history;
 
 #################################################################
 # where 절
+#################################################################
 select first_name, 
        department_id
 from employees
@@ -159,5 +160,94 @@ where salary between 14000 and 17000;
 select concat(first_name,'-', last_name) name,
        salary
 from employees
-where first_name in ('Neena', 'Lex', 'john')
-and salary between 14000 and 17000;
+where binary first_name in ('Neena', 'Lex', 'John');
+
+-- 월급 2100, 3100, 4100, 5100인 사원의 이름과 월급 출력
+select concat(first_name,'-', last_name) name,
+       salary
+from employees
+where salary = 2100
+or salary = 3100
+or salary = 4100
+or salary = 5100;
+
+select concat(first_name,'-', last_name) name,
+       salary
+from employees
+where salary in (2100, 3100, 4100, 5100);
+
+# like연산자
+
+-- %임의의 길이의 문자열
+-- _한글자의 길이
+select * 
+from employees
+where first_name like 'j%o%';
+
+-- 이름에 am을 포함한 사원의 이름과 월급 출력
+select concat(first_name, '  ', last_name) name,
+       salary
+from employees
+where first_name like '%am%';
+
+-- 이름의 두번째 글자가 a인 사원의 이름과 월급 출력
+select concat(first_name, '  ', last_name) name,
+       salary
+from employees
+where first_name like '_a%';
+
+-- 이름의 네번째 글자가 a인 사원의 이름 출력
+select concat(first_name, '  ', last_name) name
+from employees
+where first_name like '___a%';
+
+-- 이름이 4글자인 사원중 끝에서 두번째 글자가 a인 사원의 이름출력
+select concat(first_name, '  ', last_name) name
+from employees
+where first_name like '__a_';
+
+# null
+
+select first_name name, 
+       salary, 
+       commission_pct
+from employees
+where salary between 13000 and 15000;
+
+select first_name name, 
+       salary, 
+       commission_pct, 
+       salary*commission_pct
+from employees
+where salary between 13000 and 15000;
+
+select first_name,
+       salary
+       commission_pct
+from employees
+where commission_pct is null
+and salary between 13000 and 15000;
+
+-- 커미션 비율이 있는 사원의 이름과 월급 커미션 비율 출력
+select first_name,
+       salary
+       commission_pct
+from employees
+where commission_pct is not null
+and salary between 13000 and 15000;
+
+-- 담당매니저가 없고 커미션 비율이 없는 직원의 이름과 매니저아이디, 커미션비율 출력
+select first_name,
+       manager_id,
+       commission_pct
+from employees
+where commission_pct is null
+and manager_id is null;
+
+-- 부서가 없는 직원의 이름과 월급 출력
+select first_name,
+       salary
+from employees
+where department_id is null;
+
+
