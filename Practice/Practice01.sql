@@ -106,6 +106,7 @@ begin; #문제 9
 
 select ucase(country_name)
 from countries
+where region_id is not null
 order by country_name asc;
 end;
 
