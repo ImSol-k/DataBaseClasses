@@ -138,9 +138,9 @@ begin; #문제 11
 
 select date_format(min(hire_date), '%Y년 %m월 %d일 %a') 최고근속자입사일
 	  ,case when date_format(min(hire_date), '%a') = 'Mon' then '월요일'
-            when date_format(min(hire_date), '%a') = 'Wed' then '화요일'
-            when date_format(min(hire_date), '%a') = 'Thu' then '수요일'
-            when date_format(min(hire_date), '%a') = 'Sat' then '목요일'
+            when date_format(min(hire_date), '%a') = 'Tus' then '화요일'
+            when date_format(min(hire_date), '%a') = 'Wnd' then '수요일'
+            when date_format(min(hire_date), '%a') = 'Thu' then '목요일'
             when date_format(min(hire_date), '%a') = 'Fri' then '금요일'
             when date_format(min(hire_date), '%a') = 'Sat' then '토요일'
 	   else '일요일'
