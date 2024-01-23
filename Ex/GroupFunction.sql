@@ -103,8 +103,7 @@ end;
 end;
 
 #######################
-begin; #if~else/case~end
-
+#if~else/case~end
 # if~else(조건문, 참, 거짓)
 -- ifnull은 null만 체크가능 
 select first_name
@@ -143,6 +142,89 @@ select first_name
             else '팀없음'
             end team
 from employees;
+
+select first_name
+      ,department_id
+      ,case when department_id between 10 and 50 then 'A-TEAM'
+            when department_id between 60 and 100  then 'B-TEAM'
+            when department_id between 110 and 150  then 'C-TEAM'
+            else '팀없음'
+            end team
+from employees;
+
+#######################
+#join
+begin;
+
+begin; #테이블 합치기
+-- 조건걸기
+
+select first_name
+      ,department_id
+from employees;
+
+select department_name
+from departments;
+
+select *
+from employees, departments, countries;
+
+select first_name      
+      ,department_name
+      ,e.department_id
+      ,location_id
+from employees e, departments d
+where e.department_id = d.department_id;
+end;
+
+
+begin; #inner join(equi join)
+
+select e.first_name	  
+      ,d.department_name
+      ,d.department_id
+from employees e 
+join departments d
+on e.department_id = d.department_id;
+
+-- 예제
+-- 모든 직원이름, 부서이름, 업부명 출력
+
+select e.first_name name
+	  ,d.department_name department
+      ,j.job_title job
+from employees e 
+join departments d
+on e.department_id = d.department_id
+join jobs j
+on e.job_id = j.job_id;
+
+select e.first_name
+	  ,d.department_name
+      ,j.job_title
+from employees e
+join departments d
+join jobs j
+on e.department_id = d.department_id
+and e.job_id = j.job_id;
+
+select first_name
+      ,d.department_name
+      ,j.job_title
+from employees e, departments d, jobs j
+where e.department_id = d.department_id
+and e.job_id = j.job_id;
+
+end;
+
+
+begin; #outer join
+
+
+
+
+
+end;
 
 end;
 
