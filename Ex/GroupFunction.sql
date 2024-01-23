@@ -77,7 +77,33 @@ from employees
 group by department_id
 order by department_id asc;
 
+select department_id
+      ,first_name
+      ,job_id
+      ,count(*)
+from employees
+group by department_id, job_id, first_name
+order by department_id asc;
+
+-- 월급의 합계가 20000 이상인 부서 번호와, 인원수, 월급합계 출력 
+select department_id
+      ,count(*)
+      ,sum(salary) salarySum
+from employees
+group by department_id
+having sum(salary) >= 20000
+and department_id = 100
+order by department_id asc;
+
 end;
+
+#######################
+begin;
+
+
+
+end;
+
 
 
 
