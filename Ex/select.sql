@@ -7,6 +7,7 @@ end;
 # select문
 begin;
 
+##########################
 begin; #from절
 select * from employees;
 select * from departments;
@@ -55,6 +56,7 @@ select employee_id '사 번',
 from employees;
 end;
 
+##########################
 begin; #산술연산자
 select first_name,
        salary as 월급,
@@ -103,6 +105,7 @@ from dual;
 select start_date, end_date from job_history;
 end;
 
+##########################
 begin; #where 절
 select first_name, 
        department_id
@@ -208,6 +211,7 @@ from employees
 where first_name like '__a_';
 end;
 
+##########################
 begin; #null
 select first_name name, 
        salary, 
@@ -252,6 +256,7 @@ from employees
 where department_id is null;
 end;
 
+##########################
 begin; #Order by 절
 -- 정렬
 select * from employees;
@@ -308,6 +313,8 @@ end; #select문
 
 #단일행 숫자 함수
 begin;
+
+##########################
 -- 올림 반올림
  begin; # round, from, ceil, floor
 ###### round (반올림)
@@ -337,6 +344,7 @@ select  floor(123.12343)
 from dual;
 end;
 
+##########################
 -- 소수점자리수 표현
  begin; # truncate
 ###### truncate 
@@ -353,6 +361,7 @@ from employees
 order by salary asc;
 end;
 
+##########################
 -- 숫자의n승, 제곱근
  begin; # power / pow, sqrt
 ###### power / pow 
@@ -367,6 +376,7 @@ select  sqrt(144)
 from dual;
 end;
 
+##########################
 -- 음수양수, 절대값
  begin; # sing, abs
 ###### sign 
@@ -382,6 +392,7 @@ select abs(123)
       ,abs(-123);
 end;
 
+##########################
 -- 값들중 가장 큰 값, 작은값
  begin; # greatest, least
  ###### greatest 
@@ -396,6 +407,7 @@ select least(3, 0, 23)
       ,least('a', 34);
 end;
  
+ ##########################
  begin; #응용
  -- id중 가장 큰 수 출력
  select employee_id
@@ -424,26 +436,28 @@ end; #단일행함수
 # 문자함수
 begin;
 
+##########################
 -- 문자열 연결
  begin; #concat, concat_ws
- ##### cancat 문자열 연결
+# cancat 문자열 연결
  select concat('-', first_name, last_name, salary)
  from employees;
- ##### ws 문자열을 제일 앞글자에 선언된 문자로 연결
+# ws 문자열을 제일 앞글자에 선언된 문자로 연결
   select concat_ws('-', first_name, last_name, salary)
  from employees;
  end; #concat, concat_ws
  
+ ##########################
  -- 대소문자 변환
  begin; # lcase/lower, ucase/upper
- ##### lcase/lower
+# lcase/lower
  -- 모든 대문자를 소문자로 변환
  select first_name
        ,lcase(first_name)
        ,lower(first_name)
  from employees;
  
- ##### ucase/upper
+# ucase/upper
  -- 모든 소문자를 대문자로 변환
   select first_name
        ,ucase(first_name)
@@ -452,6 +466,7 @@ begin;
  
  end;
  
+ ##########################
  -- 문자열 길이 반환
  begin; #length, char_length / character_length
  
@@ -470,6 +485,7 @@ begin;
  
  end;
  
+ ##########################
  -- 문자열 자르기
  begin; #substring / substr
  -- 문자열, n번째글자부터, n번째 글자까지
@@ -489,6 +505,7 @@ begin;
  
  end;
  
+ ##########################
  -- 문자열 공백설정
  begin; #LPAD, RPAD
  # lpad(왼쪽)
@@ -503,6 +520,7 @@ begin;
  
  end;
  
+ ##########################
  -- 공백자르기
  begin; #trim, ltrin, rtrim
  
@@ -513,6 +531,7 @@ begin;
  
  end;
  
+ ##########################
  -- 문자변경
  begin; # replace
  -- 문자변경(문자열, 바꿀문자, 바뀔문자)
@@ -528,6 +547,7 @@ begin;
 # 날짜/시간함수
 begin;
 
+##########################
 -- 시간, 날짜
 begin; # current_date, time, timestamp
 -- 현재날짜
@@ -539,6 +559,7 @@ select current_timestamp(), now();
 
 end;
 
+##########################
 -- 시간, 날짜 더하기 빼기
 begin; # adddate/date_add, subdate/datesub
 
@@ -561,6 +582,7 @@ select '2021-06-20 00:00:00:00' date
       ,subdate('2021-06-20 00:00:00:00', interval 1 second) 'interval 1 second';
 end;
 
+##########################
 -- 일수차, 시간차 구하기
 begin; #datediff, timediff
 -- datediff (일수차)
@@ -581,6 +603,7 @@ end;
  # 변환함수
  begin;
  
+ ##########################
  -- 날짜 > 문자열
  begin; # datefomat
  select now() now
@@ -588,6 +611,7 @@ end;
        ,date_format(now(), '%Y-(%b)%m/(%a)%d  %h:%i:%s(%p)')format;
  end;
  
+ ##########################
  -- 문자열 > 날짜
  begin; #str_to_date
  -- 
@@ -597,6 +621,7 @@ select str_to_date('2021-jun-21', '%Y-%b-%d') strToDate;
  
  end;
  
+ ##########################
  -- 숫자에 , 추가 소수점 n자리까지 출력
  begin; #format
  
@@ -607,6 +632,7 @@ select str_to_date('2021-jun-21', '%Y-%b-%d') strToDate;
  
  end;
  
+ ##########################
  -- expression을 type형식으로 변환
  begin; #cast
  
@@ -614,6 +640,7 @@ select str_to_date('2021-jun-21', '%Y-%b-%d') strToDate;
  
  end;
  
+ ##########################
  -- 컬럼의 값이 null일때 정해진 값 출력
  begin; #ifnull
  
