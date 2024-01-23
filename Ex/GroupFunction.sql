@@ -1,5 +1,8 @@
 
+#######################
 # 그룹함수
+begin; 
+
 begin;
 select first_name
       ,round(salary, 0)
@@ -97,10 +100,49 @@ order by department_id asc;
 
 end;
 
+end;
+
 #######################
-begin;
+begin; #if~else/case~end
 
+# if~else(조건문, 참, 거짓)
+-- ifnull은 null만 체크가능 
+select first_name
+      ,commission_pct
+      ,ifnull(commission_pct, 0) commission_pct
+      ,if(commission_pct is null ,0 , 1) state
+from employees;
 
+# case~end
+-- java의 if~else랑 비슷하다 
+select employee_id
+      ,salary
+      ,job_id
+      -- job_id가 'ac_account'면 then계산
+      ,case when job_id = 'ac_account' then salary + salary * 0.1 
+            when job_id = 'sa_rep' then salary + salary * 0.2
+            when job_id = 'st_clerk' then salary + salary * 0.3
+      -- case에 해당사항이 없으면 그냥 salary출력
+       else salary
+       -- 컬럼명 realsalary으로 출력
+       end realsalary
+from employees;
+
+# 예제
+-- 직원의 이름, 부서번호, 팀 출력
+-- 팀은 코드로 결정하고 부서코드가
+-- 10~50 = A-TEAM
+-- 60~100 = B-TEAM
+-- 110~150 = C-TEAM 나머지는 팀없음
+select * from employees;
+select first_name
+      ,department_id
+      ,case when department_id >= 10 and department_id <= 50 then 'A-TEAM'
+            when department_id >= 60 and department_id <= 100 then 'B-TEAM'
+            when department_id >= 110 and department_id <= 150 then 'C-TEAM'
+            else '팀없음'
+            end team
+from employees;
 
 end;
 
