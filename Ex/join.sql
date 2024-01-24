@@ -55,8 +55,11 @@ left outer join departments d
              on e.department_id = d.department_id
 left outer join jobs j
              on e.job_id = j.job_id
-order by e.employee_id;
+order by first_name;
 
+
+
+# right #########################
 select first_name
       ,department_name
       ,j.job_title
@@ -64,9 +67,9 @@ from employees e
 right outer join departments d
               on e.department_id = d.department_id
 right outer join jobs j
-              on e.department_id = j.job_id;
-
-# right #########################
+              on e.job_id = j.job_id
+order by first_name;
+              
 select first_name
       ,department_name
 from employees e
@@ -126,6 +129,14 @@ select emp.employee_id
       ,man.first_name manager
 from employees emp, employees man
 where emp.employee_id = man.employee_id;
+
+# 잘못된 join
+select e.first_name
+      ,e.salary
+      ,l.street_address
+from employees e, locations l
+where e.salary = l.location_id;
+
 
 end;
 
