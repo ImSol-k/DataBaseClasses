@@ -74,8 +74,6 @@ where (department_id, salary) in (select department_id
 
 end;
 
-
-
 ############################
 #sub query
 begin; #any(or)
@@ -134,4 +132,13 @@ from employees e, (select department_id
 where e.department_id = s.department_id
 and e.salary = s.maxSalary;
 
+select e.department_id
+      ,e.first_name
+      ,e.salary
+from employees e;
+
+select department_id
+	  ,max(salary) maxSalary
+from employees
+group by department_id;
 end;
