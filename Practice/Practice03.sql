@@ -95,7 +95,7 @@ left join countries c
 
 end; #25
 
-######################## ??
+########################
 begin; #문제 5
 -- 자신의 매니저보다 채용일이 빠른사원의 사번, 이름, 채용일, 매니저이름, 매니저입사일 조회
 
@@ -105,8 +105,8 @@ select e.employee_id
       ,m.first_name managerName
       ,m.hire_date managerHireData
 from employees e
-right join employees m
-  on e.employee_id = m.manager_id
+join employees m
+  on e.manager_id = m.employee_id
  and e.hire_date < m.hire_date;
 
 end; #37
@@ -175,28 +175,8 @@ begin; #문제 9
 -- 각 사원에대해서 사번, 이름, 부서명, 매니저이름 조회 
 -- 부서가 없는직원도 표시, 매니저가 없는 직원도 표시
 
-(select e.employee_id
-      ,e.first_name
-      ,d.department_name
-      ,case when e.manager_id = m.manager_id then e.first_name
-       else null
-       end manager
-from employees e
-join employees m
-left join departments d
-       on e.employee_id = d.manager_id
-)union(
-select e.employee_id
-      ,e.first_name
-      ,d.department_name
-      ,case when e.manager_id = m.manager_id then e.first_name
-       else null
-       end manager
-from employees e
-join employees m
-right join departments d
-        on e.employee_id = d.manager_id);
 
+       
 end; #107
 
 

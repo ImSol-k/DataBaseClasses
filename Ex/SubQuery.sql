@@ -36,9 +36,30 @@ where salary = (select min(salary)
                      
 
 -- 평균월급보다 적게받는 사람의 이름, 월급 출력
+select first_name
+      ,salary
+from employees
+where salary < (select avg(salary)
+                  from employees);
+                  
 
+-- 부서번호가 110인 직원의 급여와 같은 월급을 받는
+-- 모든 직원의 사번, 이름, 급여 출력 
+select employee_id
+      ,first_name
+      ,salary
+from employees
+where salary in (select salary
+                          from employees
+						  where department_id = 110);
 
-
+select employee_id
+      ,first_name
+      ,salary
+from employees
+where salary = (select max(salary)
+                          from employees
+						  where department_id = 110);
 
 end;
 
