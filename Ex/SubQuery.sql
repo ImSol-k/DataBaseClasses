@@ -21,7 +21,24 @@ select first_name
 from employees
 where salary >= (select salary
 				   from employees
-				  where first_name = 'Den');
+				  where first_name = 'Den')
+order by salary asc;
+
+#예제 
+-- 월급을 가장 적게받는 사람의 이름, 월급 사원번호
+
+select first_name
+      ,salary
+      ,employee_id
+from employees
+where salary = (select min(salary)
+                     from employees);
+                     
+
+-- 평균월급보다 적게받는 사람의 이름, 월급 출력
+
+
+
 
 end;
 
