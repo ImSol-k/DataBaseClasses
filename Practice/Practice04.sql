@@ -84,21 +84,15 @@ end; #11
 begin; #문제6 *
 -- 각 업무별로 월급의 총 합구하기 
 -- 월급 총 합이 가장 놓은 업무부터 업무명과 월급 총 합 조회
-select j.job_title
-      ,salary
-from employees e, jobs j
-where (j.job_id, salary) in (select job_id
-									  ,sum(salary)
-								  from employees e, jobs j
-                                  group by j.job_id)
-order by salary desc;
--- -----------------------------------------------------------
+
 select j.job_title
       ,s.sumSalary
 from jobs j, (select sum(salary) sumSalary
                     ,job_id
-			    from employees) s;
-where j.job_id = s.job_id;
+			    from employees
+                group by job_id) s
+where j.job_id = s.job_id
+order by s.sumSalary desc;
 
 end; #19
 #########################
