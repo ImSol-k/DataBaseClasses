@@ -220,4 +220,3 @@ on e.manager_id = m.employee_id;
 end; #105
 
 
-

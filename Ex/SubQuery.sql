@@ -104,11 +104,34 @@ where department_id = 110;
 
 begin; #all(and)
 
-select first_name]
+select first_name
       ,salary
 from employees
 where salary >all (select salary
 				   from employees
 				  where department_id = 110);
+                  
+-- 각 부서별로 최고급여를 받는 사원 출력
+-- where(subQurey)로 비교
+select department_id
+      ,first_name
+      ,salary
+from employees
+where (department_id, salary) 
+   in (select department_id
+			 ,max(salary)
+	   from employees
+	   group by department_id);
+       
+-- join으로 비교
+select e.department_id
+      ,e.first_name
+      ,e.salary
+from employees e, (select department_id
+						 ,max(salary) maxSalary
+				   from employees
+				   group by department_id) s
+where e.department_id = s.department_id
+and e.salary = s.maxSalary;
 
 end;
