@@ -10,6 +10,11 @@ end; #
 begin; #문제2 ?
 -- 평균월급 이상, 최대월급 이하의 월급을 받는 사원의 
 -- 직원번호, 이름 , 월급, 평균월급, 최대월급을 월급의 오름차순으로 정렬
+
+select avg(salary) from employees;
+
+select max(salary) from employees;
+
 select employee_id
       ,first_name
       ,salary
@@ -17,9 +22,26 @@ select employee_id
       ,max(salary)
 from employees
 where (salary, salary) > (select avg(salary)
-                                ,max(salary)
+					            ,max(salary)
 							from employees)
 group by employee_id
+order by salary asc;
+
+-- -------------------------- 
+-- 내가푼거x 이해해보기용도ㅓ....
+select employee_id, 
+	   first_name, 
+       salary,
+       (select avg(salary)
+		from employees) as '평균월급',
+       (select max(salary)
+		from employees) as '최대월급'
+from employees
+where salary >= (select avg(salary)
+				from employees)
+and salary <= (select max(salary)
+				from employees)
+
 order by salary asc;
 end; #51
 #########################
