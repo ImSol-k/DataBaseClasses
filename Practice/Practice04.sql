@@ -92,28 +92,29 @@ where (j.job_id, salary) in (select job_id
 								  from employees e, jobs j
                                   group by j.job_id)
 order by salary desc;
-
-
+-- -----------------------------------------------------------
 select j.job_title
-      ,e.salary
-from employees e, jobs j
-where (j.job_title,salary) in (select j.job_title
-									 ,sum(salary)
-							   from employees e, jobs j
-							   group by j.job_title)
-;
+      ,s.sumSalary
+from jobs j, (select sum(salary) sumSalary
+                    ,job_id
+			    from employees) s;
+where j.job_id = s.job_id;
+
 end; #19
 #########################
-begin; #문제7 *
--- 자신의 부서 평균 월급보다 월급이 많은 직원의 전화번호, 이름, 월급 조회
+begin; #문제7
+-- 자신의 부서 평균 월급보다 월급이 많은 직원의 번호, 이름, 월급 조회
 
-select phone_number
-      ,first_name
-      ,salary
-from employees
-where salary >any (select avg(salary)
+select e.employee_id
+      ,e.first_name
+      ,e.salary
+from employees e, (select avg(salary) avgSalary
+	                     ,department_id
 					from employees
-					group by department_id);
+                    group by department_id) s
+where e.salary > s.avgSalary
+and e.department_id = s.department_id;
+
 
 end; #38
 #########################
