@@ -7,7 +7,7 @@ where salary < (select avg(salary)
                   from employees);
 end; #
 ######################### 
-begin; #문제2 *
+begin; #문제2 ?
 -- 평균월급 이상, 최대월급 이하의 월급을 받는 사원의 
 -- 직원번호, 이름 , 월급, 평균월급, 최대월급을 월급의 오름차순으로 정렬
 select employee_id
@@ -104,7 +104,7 @@ where (j.job_title,salary) in (select j.job_title
 ;
 end; #19
 #########################
-begin; #문제7
+begin; #문제7 *
 -- 자신의 부서 평균 월급보다 월급이 많은 직원의 전화번호, 이름, 월급 조회
 
 select phone_number
