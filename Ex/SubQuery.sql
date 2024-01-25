@@ -52,7 +52,7 @@ from employees
 where salary in (select salary
                           from employees
 						  where department_id = 110);
-
+-- 단일행연산자는 단일행함수랑 같이 사용해야함!!
 select employee_id
       ,first_name
       ,salary
@@ -60,11 +60,55 @@ from employees
 where salary = (select max(salary)
                           from employees
 						  where department_id = 110);
+                          
+-- 각 부서별로 최고급여를 받는 사원의 이름과 월급 출력 
+
+select first_name
+      ,salary
+      ,department_id
+from employees 
+where (department_id, salary) in (select department_id
+                                        ,max(salary)
+									from employees 
+								group by department_id);
 
 end;
 
 
 
+############################
+#sub query
+begin; #any(or)
+-- 월급이 11000보다 큰 직원의 이름, 급여 출력
+select first_name
+      ,salary
+from employees
+where salary > 11000;
+
+-- 부서번호가 110인 직원의 급여보다 큰 모든직원의 이름, 급여를 출력하세요
 
 
+select first_name
+      ,salary
+from employees
+where salary >any (select salary
+				   from employees
+				  where department_id = 110);
 
+
+end;
+select first_name
+      ,salary
+from employees
+where department_id = 110;
+
+begin; #all(and)
+
+select first_name]
+      ,salary
+from employees
+where salary >all (select salary
+				   from employees
+				  where department_id = 110);
+
+end;

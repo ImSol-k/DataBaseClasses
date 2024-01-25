@@ -170,38 +170,54 @@ join regions r
 
 end; #11
 
-######################## ??
+########################
 begin; #문제 9
 -- 각 사원에대해서 사번, 이름, 부서명, 매니저이름 조회 
 -- 부서가 없는직원도 표시, 매니저가 없는 직원도 표시
 
 
+select e.employee_id 
+      ,e.first_name myName
+      ,e.department_id
+      ,m.first_name manager
+from employees e
+left join employees m
+on e.manager_id = m.employee_id;
+
        
 end; #107
 
-
-######################## ??
+########################
 begin; #문제 9-1
 -- 문제 9에서 부서없는직원표시 
 -- 매니저없는직원 표시하지 않기
 
-select e.employee_id
-      ,e.first_name
-      ,d.department_name
-      ,case when e.employee_id = d.manager_id then e.first_name
-       else null
-       end manager
+select e.employee_id 
+      ,e.first_name myName
+      ,e.department_id
+      ,m.first_name manager
 from employees e
-left join departments d
-       on e.employee_id = d.manager_id;
+join employees m
+on e.manager_id = m.employee_id;
 
-end; #108
 
-######################## ??
+end; #106
+
+########################
 begin; #문제 9-2
 -- 문제 9에서 부서없는직원, 매니저없는직원 모두 표시하지 않기
 
-end; #106
+select e.employee_id,
+       e.first_name,
+       d.department_name,
+       m.first_name
+from employees e
+join departments d
+on e.department_id = d.department_id
+join employees m
+on e.manager_id = m.employee_id;
+
+end; #105
 
 
 
