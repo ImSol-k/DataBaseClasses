@@ -21,4 +21,3 @@ rename table book to article;
 select * from article;
 -- 테이블 삭제 ---------------------------------
 drop table article;
-
