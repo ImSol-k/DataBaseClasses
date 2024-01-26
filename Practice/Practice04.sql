@@ -7,42 +7,43 @@ where salary < (select avg(salary)
                   from employees);
 end; #
 ######################### 
-begin; #문제2 ?
+begin; #문제2
 -- 평균월급 이상, 최대월급 이하의 월급을 받는 사원의 
 -- 직원번호, 이름 , 월급, 평균월급, 최대월급을 월급의 오름차순으로 정렬
 
 select avg(salary) from employees;
-
 select max(salary) from employees;
 
 select employee_id
       ,first_name
       ,salary
-      ,avg(salary)
-      ,max(salary)
-from employees
-where (salary, salary) > (select avg(salary)
-					            ,max(salary)
-							from employees)
-group by employee_id
-order by salary asc;
-
--- -------------------------- 
--- 내가푼거x 이해해보기용도ㅓ....
-select employee_id, 
-	   first_name, 
-       salary,
-       (select avg(salary)
-		from employees) as '평균월급',
+      ,(select avg(salary)
+		from employees) as 'avg(salary)',
        (select max(salary)
-		from employees) as '최대월급'
+		from employees) as 'max(salary)'
 from employees
 where salary >= (select avg(salary)
-				from employees)
+				   from employees)
 and salary <= (select max(salary)
-				from employees)
-
+				   from employees)
 order by salary asc;
+
+
+
+select e.employee_id
+	  ,e.first_name
+      ,e.salary
+      ,avg(m.salary)
+      ,max(m.salary)
+from employees e, employees m
+where e.salary >= (select avg(salary)
+				   from employees)
+and e.salary <= (select max(salary)
+				   from employees)
+group by e.employee_id
+order by salary asc;
+
+
 end; #51
 #########################
 begin; #문제3
@@ -103,7 +104,7 @@ order by salary desc;
 
 end; #11
 #########################
-begin; #문제6 *
+begin; #문제6
 -- 각 업무별로 월급의 총 합구하기 
 -- 월급 총 합이 가장 놓은 업무부터 업무명과 월급 총 합 조회
 
@@ -143,7 +144,7 @@ select employee_id
 from employees
 order by hire_date asc
 limit 10,5;
-end;
+-- end;
 
 
 
