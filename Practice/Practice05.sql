@@ -47,6 +47,8 @@ begin; #문제3
 select m.employee_id
       ,m.first_name
       ,m.salary
+      ,avg(e.salary)
+      ,max(e.salary)
 from employees e, employees m
 where m.employee_id = e.manager_id
 and m.hire_date < 20050101
@@ -54,15 +56,38 @@ and m.salary > 5000
 group by m.employee_id
 order by round(m.salary, 1) desc;
 
+select manager_id, 
+	   avg(salary) 평균,
+       max(salary) 최대
+from employees
+group by manager_id;
 end; #9
 ##############################
 begin; #문제4
+-- 각 사원에 대해 사번, 이름, 부서명, 매니저이름 조회
+-- 부서없는직원도 표시 
 
+select e.employee_id,
+       e.first_name name,
+       e.department_id,
+       m.first_name manager_name
+from employees e, employees m
+where m.employee_id = e.manager_id;
 
 end; #45
 ##############################
 begin; #문제5
-
+-- 2005년 이후 입사한 직원중 입사일이 11~20번째 직원의 
+-- 사번, 이름, 부서명, 월급, 입사일을 입사일순서로 출력
+select employee_id,
+	   first_name,
+       department_id,
+       salary,
+       hire_date
+from employees
+where hire_date > 20050101
+order by hire_date
+limit 10, 10;
 
 end; #45
 ##############################
