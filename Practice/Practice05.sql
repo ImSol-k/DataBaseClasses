@@ -30,20 +30,19 @@ select employee_id
 			when date_format(hire_date, '%a') = 'Sat' then date_format(hire_date, '%Y-%m-%d 토요일')
        else date_format(hire_date, '%Y-%m-%d 일요일')
        end 'hire_date'
-      ,date_format(phone_number)
+      ,replace(phone_number, '.','-')
       ,department_id
-from employees;
+from employees
+where (salary,department_id) in (select max(salary)
+									   ,department_id
+								 from employees
+								 group by department_id);
 end; #11
 ##############################
 begin; #문제3
--- 매니저별 담당직원들의 평균월급, 최소월급, 최대월급 
--- 직원은 2005년 이후 입사자 
--- 매니저별 평균월급이 5000이상만 내림차순으로 출력(소수점 첫째자리 반올림)
--- 매니저아이디, 매니저이름, 매니저별 평균월급 , 매니저별최소월급, 매니저별최대월급
-select m.manager_id
-	  ,m.first_name
-from employees m, (select ;
-end; #9
+
+
+end; #45
 ##############################
 begin; #문제4
 
