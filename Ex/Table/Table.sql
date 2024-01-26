@@ -47,3 +47,6 @@ where book_id = 4;
 
 delete from author
 where author_id = 4;
+-- 삭제 --------------------------------------
+drop table book;
+drop table author;
