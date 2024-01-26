@@ -24,11 +24,26 @@ insert into author(author_id, author_name)
 values (4,'정우성');
 -- 레코드 변경 --------------------------------
 update author 
-set author_name = '기안84',
-	author_desc = '웹툰작가'
-where author_id = 1;
+set author_name = '박경리',
+	author_desc = '토지작가'
+where author_id = 3;
 -- 일부만 변경 가능
 update author 
-set author_name = '김도현'
-where author_id = 3;
+set author_name = '유시민'
+where author_id = 4;
+-- 책등록 ------------------------------------
+select *
+from book b
+left join author a
+on b.author_id = a.author_id;
+insert into book values (1,'우리들의 일그러진 영웅','다림', null, 2);
+insert into book values (2,'삼국지','민음사', null, 2);
+insert into book values (3,'토지','마로니에북스', null, 1);
+insert into book values (4,'유시민의 글쓰기 특강','생각의길', null, 4);
 
+update book
+set author_id = null
+where book_id = 4;
+
+delete from author
+where author_id = 4;
