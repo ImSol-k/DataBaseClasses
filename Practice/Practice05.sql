@@ -92,13 +92,33 @@ limit 10, 10;
 end; #45
 ##############################
 begin; #문제6
-
+-- 가장 늦게 입사한 직원의 이름(성이름), 월급, 부서이름 출력
+select concat(first_name, '  ', last_name) 이름,
+       salary 월급,
+       department_name 부서이름,
+       hire_date
+from employees e, departments d
+where e.department_id = d.department_id
+and hire_date = (select max(hire_date)
+				 from employees);
 
 end; #45
 ##############################
 begin; #문제7
+-- 평균월급이 가장 높은 부서 직원들의 직원번호, 이름, 성, 업무, 월급 조회
+select employee_id,
+       first_name,
+       last_name,
+       j.job_title,
+       salary
+from employees e, jobs j
+where;
 
-
+select first_name
+from employees
+where salary = (select avg(salary)
+					from employees)
+group by department_id;
 end; #45
 ##############################
 begin; #문제8
