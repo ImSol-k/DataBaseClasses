@@ -40,9 +40,21 @@ where (salary,department_id) in (select max(salary)
 end; #11
 ##############################
 begin; #문제3
+-- 매니저별 담당직원들의 평균월급 최소월급, 최대월급
+-- 직원은 2005년이후 입사자
+-- 매니저별 평균 월급이 5000이상만 내림차순으로 정렬(소수점 첫째자리 반올림)
+-- 매니저아이디, 매니저이름, 매니저별편균월급, 매니저별최소월급, 매니저별 최대월급
+select m.employee_id
+      ,m.first_name
+      ,m.salary
+from employees e, employees m
+where m.employee_id = e.manager_id
+and m.hire_date < 20050101
+and m.salary > 5000
+group by m.employee_id
+order by round(m.salary, 1) desc;
 
-
-end; #45
+end; #9
 ##############################
 begin; #문제4
 
