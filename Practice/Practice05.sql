@@ -104,7 +104,7 @@ and hire_date = (select max(hire_date)
 
 end; #45
 ##############################
-begin; #문제7
+begin; #문제7 *
 -- 평균월급이 가장 높은 부서 직원들의 직원번호, 이름, 성, 업무, 월급 조회
 select employee_id,
        first_name,
@@ -112,27 +112,40 @@ select employee_id,
        j.job_title,
        salary
 from employees e, jobs j
-where;
+where salery =any (select avg(salary)
+				  from employees
+                  group by department_id);
+group by salary;
+-- ---------------------------------
+select d.first_name,
+	   d.department_id,
+       avg(d.salary)
+from employees e, employees d
+group by d.department_id
+having d.department_id = e.department_id;
 
-select first_name
+select department_id,
+       avg(salary)
 from employees
-where salary = (select avg(salary)
-					from employees)
 group by department_id;
 end; #45
 ##############################
 begin; #문제8
-
+-- 평균월급이 가장 높은 부서명과 월급 
+select d.department_name,
+	   avg(salary) avgSalary
+from employees e, departments d
+group by department_id;
 
 end; #45
 ##############################
 begin; #문제9
-
+-- 평균월급이 가장 높은 지역과 월급
 
 end; #45
 ##############################
 begin; #문제10
-
+-- 평균월급이 가장 높은 업무와 평균월급
 
 end; #45
 
