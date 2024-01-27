@@ -133,10 +133,8 @@ end; #45
 begin; #문제8
 -- 평균월급이 가장 높은 부서명과 월급 
 select d.department_name,
-	   avg(salary) avgSalary
-from employees e, departments d
-group by department_id;
-
+	   e.salary
+from employees e, departments d;
 end; #45
 ##############################
 begin; #문제9
