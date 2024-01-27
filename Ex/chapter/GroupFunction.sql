@@ -95,7 +95,7 @@ select department_id
 from employees
 group by department_id
 having sum(salary) >= 20000
-and department_id = 100
+-- and department_id = 100
 order by department_id asc;
 
 end;

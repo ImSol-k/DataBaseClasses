@@ -106,35 +106,36 @@ end; #45
 ##############################
 begin; #문제7 *
 -- 평균월급이 가장 높은 부서 직원들의 직원번호, 이름, 성, 업무, 월급 조회
-select employee_id,
-       first_name,
-       last_name,
+select e.employee_id,
+       e.first_name,
+       e.last_name,
        j.job_title,
-       salary
-from employees e, jobs j
-where salery =any (select avg(salary)
-				  from employees
-                  group by department_id);
-group by salary;
--- ---------------------------------
-select d.first_name,
-	   d.department_id,
-       avg(d.salary)
-from employees e, employees d
-group by d.department_id
-having d.department_id = e.department_id;
-
-select department_id,
-       avg(salary)
-from employees
+       avg(e.salary)
+from employees e
+join jobs j
 group by department_id;
+
+
+
 end; #45
 ##############################
 begin; #문제8
 -- 평균월급이 가장 높은 부서명과 월급 
 select d.department_name,
 	   e.salary
-from employees e, departments d;
+from employees e
+join departments d
+group by d.department_name;
+ 
+ 
+select d.department_name,
+	   avg(e.salary) avgS
+from employees e, departments d
+where d.department_id = (select department_id,
+								max(avg(salary)) ms
+						 from employees
+                         group by ms)
+group by d.department_id;
 end; #45
 ##############################
 begin; #문제9
