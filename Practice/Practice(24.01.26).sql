@@ -27,3 +27,8 @@ update author
 set author_desc = '서울특별시'
 where author_id = 4;
 
+-- 삭제 -------------------------------------------------------
+drop table book;
+drop table author;
+drop database book_db;
+drop user 'book'@'%';
