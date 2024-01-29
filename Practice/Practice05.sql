@@ -111,7 +111,6 @@ select e.employee_id,
        e.first_name,
        e.last_name,
        j.job_title,
-<<<<<<< HEAD
        salary
 from employees e
 left join jobs j
@@ -124,56 +123,66 @@ select employee_id,
        last_name,
        j.job_title,
        salary
-from employees e
-left join jobs j
-	   on e.job_id = j.job_id;
+from employees e, departments d, jobs j
+where d.department_name = (select d.department_name,
+								avg(e.salary)
+						 from employees e, departments d
+                         group by d.department_name
+                         order by avg(salary) desc
+                         limit 0,1)
+and d.department_id = e.department_id;
 
 -- 평균 월급
-select department_id,
-	   avg(salary)
-from employees
-=======
-       avg(e.salary)
-from employees e
-join jobs j
->>>>>>> branch 'master' of https://github.com/ImSol-k/MySQL.git
-group by department_id;
+
 
 
 
 end; #45
 ##############################
 begin; #문제8
-<<<<<<< HEAD
-
-=======
 -- 평균월급이 가장 높은 부서명과 월급 
+
 select d.department_name,
-	   e.salary
-from employees e
-join departments d
-group by d.department_name;
- 
- 
-select d.department_name,
-	   avg(e.salary) avgS
-from employees e, departments d
-where d.department_id = (select department_id,
-								max(avg(salary)) ms
-						 from employees
-                         group by ms)
-group by d.department_id;
->>>>>>> branch 'master' of https://github.com/ImSol-k/MySQL.git
+	   avg(e.salary)
+from employees e, departments d, (select avg(salary) avgS
+								  from employees
+                                  group by department_id) s
+where e.department_id = d.department_id
+group by d.department_name
+having avg(e.salary) >= max(s.avgS);
+
 end; #45
 ##############################
 begin; #문제9
--- 평균월급이 가장 높은 지역과 월급
+-- 평균월급이 가장 높은 지역과 월급 
+
+
+-- X ----------------------------------
+select r.region_name,
+	   avg(e.salary)
+from employees e, departments d, locations l, countries c, regions r
+where e.department_id = d.department_id
+  and d.location_id = l.location_id
+  and l.country_id = c.country_id
+  and c.region_id = r.region_id
+group by r.region_name
+order by avg(salary) desc
+limit 0,1;
 
 end; #45
 ##############################
 begin; #문제10
 -- 평균월급이 가장 높은 업무와 평균월급
+-- limit 사용x
 
+select j.job_title,
+	   avg(e.salary)
+from employees e, jobs j, (select avg(salary) avgS
+										   from employees
+                                           group by job_id) s
+where e.job_id = j.job_id
+group by j.job_title
+having avg(e.salary) >= max(s.avgS);
 end; #45
 
 
