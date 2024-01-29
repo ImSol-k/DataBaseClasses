@@ -25,7 +25,9 @@ public class AuthorSelect {
 			// 3. SQL문 준비 / 바인딩 / 실행
 
 			String query = "";
-			query += " select *";
+			query += " select author_id,";
+			query += " 		  author_name,";
+			query += "  	  author_desc";
 			query += " from author";
 
 			pstmt = conn.prepareStatement(query);
@@ -34,6 +36,17 @@ public class AuthorSelect {
 
 			// 4.결과처리
 			
+			while(rs.next()) {
+				
+//				int id = rs.getInt("author_id");
+//				String name = rs.getString("author_name");
+//				String desc = rs.getString("author_desc");
+				
+				int id = rs.getInt(1);
+				String name = rs.getString(2);
+				String desc = rs.getString(3);
+				System.out.println("id = " + id + ", \tname = " + name + ",\tdesc = " + desc);
+			}
 			
 			
 			
