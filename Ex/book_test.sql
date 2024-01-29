@@ -70,7 +70,16 @@ insert into book values (null, '오직두사람', '문학동네','2017-05-04', 6
 insert into book values (null, '26년', '재미주의','2012-02-04', 5);
 insert into book values (null, '자바의 정석', '열린책들','2015-10-20', null);
 select * from book;
-
+select b.book_id,
+	   b.title,
+       b.pubs,
+       b.pub_date,
+       b.author_id,
+       a.author_name,
+       a.author_desc
+from book b
+left join author a
+	   on b.author_id = a.author_id;
 
 -- 아래의 조건에 맞는 책목록 리스트 쿼리문 1개
 /*
