@@ -1,4 +1,5 @@
-
+create user 'book'@'%' identified by 'book';
+drop user 'book'@'%';
 ##############################
 begin; #문제1
 -- 담당매니저가 배정되어 있으나 커미션비율이 없고,
@@ -111,18 +112,29 @@ select employee_id,
        last_name,
        j.job_title,
        salary
-from employees e, jobs j
-where;
+from employees e
+left join jobs j
+	   on e.job_id = j.job_id;
+group by j.job_id;
 
-select first_name
+
+select employee_id,
+       first_name,
+       last_name,
+       j.job_title,
+       salary
+from employees e
+left join jobs j
+	   on e.job_id = j.job_id;
+
+-- 평균 월급
+select department_id,
+	   avg(salary)
 from employees
-where salary = (select avg(salary)
-					from employees)
 group by department_id;
 end; #45
 ##############################
 begin; #문제8
-
 
 end; #45
 ##############################
