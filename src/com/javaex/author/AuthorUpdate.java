@@ -23,20 +23,20 @@ public class AuthorUpdate {
 			conn = DriverManager.getConnection(url, "book", "book");
 
 			// 3. SQL문 준비 / 바인딩 / 실행
-
+			int numA = 1;
+			int numB = 2;
 			String query = "";
-			query += " select *";
-			query += " from author";
-
+			query += " update author";
+			query += " set author_name = ?";
+			query += " where author_id = ?";
 			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, numA);
+			pstmt.setInt(2, numB);
 
 			rs = pstmt.executeQuery();
 
 			// 4.결과처리
-			
-			
-			
-			
+
 		} catch (ClassNotFoundException e) {
 			System.out.println("error: 드라이버 로딩 실패 - " + e);
 		} catch (SQLException e) {
