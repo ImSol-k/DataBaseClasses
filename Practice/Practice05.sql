@@ -156,19 +156,32 @@ end; #45
 begin; #문제9
 -- 평균월급이 가장 높은 지역과 월급 
 
-
--- X ----------------------------------
 select r.region_name,
 	   avg(e.salary)
-from employees e, departments d, locations l, countries c, regions r
-where e.department_id = d.department_id
-  and d.location_id = l.location_id
-  and l.country_id = c.country_id
-  and c.region_id = r.region_id
+from employees e, regions r,
+(select avg(salary) avgS
+ from employees e, departments d, locations l, countries c, regions r
+ where e.department_id = d.department_id
+   and d.location_id = l.location_id
+   and l.country_id = c.country_id
+   and c.region_id = r.region_id
+ group by r.region_name) s
 group by r.region_name
-order by avg(salary) desc
-limit 0,1;
+having avg(e.salary) >= max(s.avgS);
 
+
+select r.region_name,
+	   avg(e.salary)
+from employees e, departments d, locations l, countries c, regions r,
+(select avg(salary) avgS
+ from employees e, regions r
+ group by r.region_name) s
+where e.department_id = d.department_id
+   and d.location_id = l.location_id
+   and l.country_id = c.country_id
+   and c.region_id = r.region_id
+group by r.region_name
+having avg(e.salary) >= max(s.avgS);
 end; #45
 ##############################
 begin; #문제10
