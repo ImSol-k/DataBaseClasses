@@ -1,4 +1,4 @@
-package com.javaex.ex02;
+package com.javaex.ex03;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,9 +8,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AuthorDao {
-
-	private List<AuthorVo> authorList = new ArrayList<AuthorVo>();
+public class BookDao {
+	
+	private List<BookVo> bookList = new ArrayList<BookVo>();
+	private BookVo bookVo;
 	private AuthorVo author;
 	private Connection conn = null;
 	private PreparedStatement pstmt = null;
@@ -20,7 +21,7 @@ public class AuthorDao {
 	private String id = "book";
 	private String pw = "book";
 
-	private void authorSetting() {
+	private void bookSetting() {
 		try {
 			Class.forName(dv);
 			String url = this.url;
@@ -51,36 +52,44 @@ public class AuthorDao {
 	}//close()
 
 	// 불러오기
-	public void authorSelect() {
+	public void bookSelectAll() {
 
-		authorSetting();
+		bookSetting();
 
 		try {
+			
 			String query = "";
-			query += " select author_id,";
+			query += " select book_id,";
+			query += " 		  title,";
+			query += " 		  pubs,";
+			query += " 		  pub_date,";
+			query += " 		  b.author_id,";
 			query += " 		  author_name,";
 			query += "  	  author_desc";
-			query += " from author";
+			query += " from book b, author a";
 			pstmt = conn.prepareStatement(query);
 			rs = pstmt.executeQuery();
-
-			int id;
-			String name;
-			String desc;
+			System.out.println("select");
+			int bookId, authorId;
+			String title, pubs, pubData, authorName, authorDesc;
 			while (rs.next()) {
 
-				id = rs.getInt("author_id");
-				name = rs.getString("author_name");
-				desc = rs.getString("author_desc");
+				bookId = rs.getInt("book_id");
+				title = rs.getString("title");
+				pubs = rs.getString("pubs");
+				pubData = rs.getString("pub_date");				
+				authorId = rs.getInt("author_id");
+				authorName = rs.getString("author_name");
+				authorDesc = rs.getString("author_desc");
 
-				author = new AuthorVo(id, name, desc);
-				authorList.add(author);
+				bookVo = new BookVo(bookId, title, pubs, pubData, authorId, authorName, authorDesc);
+				bookList.add(bookVo);
 			}
 			System.out.println("==================================================");
-			for (int i = 0; i < authorList.size(); i++) {
-				authorList.get(i).showInfo();
-
-			}
+//			for (int i = 0; i < bookList.size(); i++) {
+//				System.out.println(bookList.get(i).toString()); 
+//
+//			}
 
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
@@ -89,16 +98,16 @@ public class AuthorDao {
 	}//authorSelect()
 
 	// 리스트
-	public void authorShowList() {
-		for (int i = 0; i < authorList.size(); i++) {
-			authorList.get(i).showInfo();
+	public void bookShowList() {
+		for (int i = 0; i < bookList.size(); i++) {
+			bookList.get(i).showInfo();
 		}
 	}//authorShowList() 
 
 	// 리스트
-	public List<AuthorVo> authorList() {
+	public List<BookVo> bookList() {
 
-		authorSetting();
+		bookSetting();
 
 		try {
 			String query = "";
@@ -118,22 +127,22 @@ public class AuthorDao {
 				name = rs.getString("author_name");
 				desc = rs.getString("author_desc");
 
-				author = new AuthorVo(id, name, desc);
-				authorList.add(author);
+				bookVo = new BookVo();
+				bookList.add(bookVo);
 			}
 
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
 		}
 		close();
-		return authorList;
+		return bookList;
 	} //authorList
 
 	// 추가
-	public int authorInsert(String name, String desc) {
+	public int bookInsert(String name, String desc) {
 
 		int count = -1;
-		authorSetting();
+		bookSetting();
 
 		try {
 			String query = "";
@@ -153,10 +162,10 @@ public class AuthorDao {
 		return count;
 
 	}//authorInsert()
-	public int authorInsert(AuthorVo author) {
+	public int bookInsert(AuthorVo author) {
 
 		int count = -1;
-		authorSetting();
+		bookSetting();
 
 		try {
 			String query = "";
@@ -176,9 +185,9 @@ public class AuthorDao {
 	}//authorInsert()
 
 	// 삭제
-	public int authorDelete(int num) {
+	public int bookDelete(int num) {
 		int count = -1;
-		authorSetting();
+		bookSetting();
 
 		try {
 			String query = "";
@@ -189,7 +198,7 @@ public class AuthorDao {
 
 			count = pstmt.executeUpdate();
 			System.out.println(count + "건 삭제 되었습니다.");
-			authorList.remove(num - 1);
+			bookList.remove(num - 1);
 
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
@@ -198,9 +207,9 @@ public class AuthorDao {
 		return count;
 	}//authorDelete()
 
-	public void authorUpdate(String name, String desc, int id) {
+	public void bookUpdate(String name, String desc, int id) {
 
-		authorSetting();
+		bookSetting();
 
 		try {
 			String query = "";
@@ -213,6 +222,7 @@ public class AuthorDao {
 			pstmt.setString(2, desc);
 			pstmt.setInt(3, id);
 
+			//rs = pstmt.executeQuery();
 			pstmt.executeUpdate();
 			System.out.println("수정되었습니다");
 			
@@ -221,29 +231,6 @@ public class AuthorDao {
 		}
 		close();
 	}//authorUpdate()
-	public int authorUpdate(AuthorVo author) {
-		int count = -1;
-		authorSetting();
-
-		try {
-			String query = "";
-			query += " update author";
-			query += " set author_name = ?,";
-			query += "     author_desc = ?";
-			query += " where author_id = ?";
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, author.getAuthorName());
-			pstmt.setString(2, author.getAuthorDesc());
-			pstmt.setInt(3, author.getId());
-
-			count = pstmt.executeUpdate();
-			System.out.println(count + "건 수정되었습니다");
-			
-		} catch (SQLException e) {
-			System.out.println("error:" + e);
-		}
-		close();
-		return count;
-	}//authorUpdate()
-
+	
+	
 }

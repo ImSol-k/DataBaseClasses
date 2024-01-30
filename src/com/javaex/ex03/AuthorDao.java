@@ -1,4 +1,4 @@
-package com.javaex.ex02;
+package com.javaex.ex03;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -213,6 +213,7 @@ public class AuthorDao {
 			pstmt.setString(2, desc);
 			pstmt.setInt(3, id);
 
+			//rs = pstmt.executeQuery();
 			pstmt.executeUpdate();
 			System.out.println("수정되었습니다");
 			
@@ -220,30 +221,6 @@ public class AuthorDao {
 			System.out.println("error:" + e);
 		}
 		close();
-	}//authorUpdate()
-	public int authorUpdate(AuthorVo author) {
-		int count = -1;
-		authorSetting();
-
-		try {
-			String query = "";
-			query += " update author";
-			query += " set author_name = ?,";
-			query += "     author_desc = ?";
-			query += " where author_id = ?";
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, author.getAuthorName());
-			pstmt.setString(2, author.getAuthorDesc());
-			pstmt.setInt(3, author.getId());
-
-			count = pstmt.executeUpdate();
-			System.out.println(count + "건 수정되었습니다");
-			
-		} catch (SQLException e) {
-			System.out.println("error:" + e);
-		}
-		close();
-		return count;
 	}//authorUpdate()
 
 }
