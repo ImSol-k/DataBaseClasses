@@ -7,10 +7,13 @@ public class BookApp {
 
 	public static void main(String[] args) {
 		
-		AuthorDao author = new AuthorDao();
-		List<AuthorVo> authorList = author.authorList();
 		Scanner in = new Scanner(System.in);
+		AuthorDao author = new AuthorDao();
 		
+		//int cnt = author.AuthorInsert("이효리", "제주도");
+		//System.out.println(cnt + "건 추가");
+		
+		List<AuthorVo> authorList = author.authorList();
 		for(AuthorVo vo : authorList) {
 			int id = vo.getId();
 			String name = vo.getAuthorName();

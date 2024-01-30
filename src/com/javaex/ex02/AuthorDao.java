@@ -1,4 +1,4 @@
-package com.javaex.ex01.copy;
+package com.javaex.ex02;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,11 +16,33 @@ public class AuthorDao {
 	private PreparedStatement pstmt = null;
 	private ResultSet rs = null;
 
-	private void authorSetting() throws SQLException, ClassNotFoundException{
-		Class.forName("com.mysql.cj.jdbc.Driver");
-		String url = "jdbc:mysql://localhost:3306/book_db";
-		// String url = "jdbc:mysql://192.168.0.43:3306/book_db";
-		conn = DriverManager.getConnection(url, "book", "book");
+	private void authorSetting() {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			String url = "jdbc:mysql://localhost:3306/book_db";
+			conn = DriverManager.getConnection(url, "book", "book");
+			// String url = "jdbc:mysql://192.168.0.43:3306/book_db";
+		} catch (ClassNotFoundException e) {
+			System.out.println("error: 드라이버 로딩 실패 - " + e);
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		} 
+
+	}
+	private void close() {
+		try {
+			if (rs != null) {
+				rs.close();
+			}
+			if (pstmt != null) {
+				pstmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		} catch (SQLException e) {
+			System.out.println("error:" + e);
+		}
 	}
 
 	// 불러오기
@@ -53,25 +75,10 @@ public class AuthorDao {
 
 			}
 
-		} catch (ClassNotFoundException e) {
-			System.out.println("error: 드라이버 로딩 실패 - " + e);
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (pstmt != null) {
-					pstmt.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				System.out.println("error:" + e);
-			}
-		}
+		} 
+		close();
 	}
 
 	// 리스트
@@ -80,8 +87,9 @@ public class AuthorDao {
 			authorList.get(i).showInfo();
 		}
 	}
+
 	public List<AuthorVo> authorList() {
-		
+
 		try {
 			authorSetting();
 			authorSetting();
@@ -105,71 +113,39 @@ public class AuthorDao {
 				author = new AuthorVo(id, name, desc);
 				authorList.add(author);
 			}
-			
 
-		} catch (ClassNotFoundException e) {
-			System.out.println("error: 드라이버 로딩 실패 - " + e);
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (pstmt != null) {
-					pstmt.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				System.out.println("error:" + e);
-			}
-		}
+		} 
+		close();
 		return authorList;
-	} //List
+	} // List
 
 	// 추가
-	public void AuthorInsert(String name, String desc) {
+	public int AuthorInsert(String name, String desc) {
 
+		int count = -1;
 		try {
 			authorSetting();
 
 			String query = "";
 			int n = authorList.size() + 1;
 			query += " insert into author";
-			query += " values(" + n + ", ?, ?)";
+			query += " values(null, ?, ?)";
 
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, name);
 			pstmt.setString(2, desc);
 
-			int count = pstmt.executeUpdate();
-			author = new AuthorVo(authorList.size() + 1, name, desc);
-			authorList.add(author);
-			System.out.println(count + "건 등록 되었습니다.");
-
-		} catch (ClassNotFoundException e) {
-			System.out.println("error: 드라이버 로딩 실패 - " + e);
+			count = pstmt.executeUpdate();
+			System.out.println();
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (pstmt != null) {
-					pstmt.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				System.out.println("error:" + e);
-			}
-		}
+		} 
+		close();
+		return count;
 
-	}
+	}// insert
 
 	// 삭제
 	public void authorDelete(int num) {
@@ -184,31 +160,16 @@ public class AuthorDao {
 
 			int count = pstmt.executeUpdate();
 			System.out.println(count + "건 삭제 되었습니다.");
-			authorList.remove(num -1);
+			authorList.remove(num - 1);
 
-		} catch (ClassNotFoundException e) {
-			System.out.println("error: 드라이버 로딩 실패 - " + e);
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (pstmt != null) {
-					pstmt.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				System.out.println("error:" + e);
-			}
-		}
+		} 
+		close();
 	}
 
 	public void authorUpdate(String name, String desc, int id) {
-		
+
 		try {
 			authorSetting();
 
@@ -220,28 +181,13 @@ public class AuthorDao {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, name);
 			pstmt.setString(2, desc);
-			pstmt.setInt(3,  id);
+			pstmt.setInt(3, id);
 
 			rs = pstmt.executeQuery();
-		} catch (ClassNotFoundException e) {
-			System.out.println("error: 드라이버 로딩 실패 - " + e);
 		} catch (SQLException e) {
 			System.out.println("error:" + e);
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (pstmt != null) {
-					pstmt.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				System.out.println("error:" + e);
-			}
-		}
+		} 
+		close();
 	}
 
 }
