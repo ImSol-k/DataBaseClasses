@@ -112,7 +112,7 @@ select e.employee_id 사번,
        e.last_name 이름,
        j.job_title 업무명,
        salary 월급,
-       s.avgs,
+       s.avgs 부서평균월급,
        e.department_id 부서아이디
 from employees e, jobs j, (select d.department_id,
 							   avg(e.salary) avgs
