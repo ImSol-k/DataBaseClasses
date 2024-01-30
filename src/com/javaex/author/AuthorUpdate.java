@@ -28,6 +28,7 @@ public class AuthorUpdate {
 			String query = "";
 			query += " update author";
 			query += " set author_name = ?";
+			query += " set author_desc = ?";
 			query += " where author_id = ?";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, numA);

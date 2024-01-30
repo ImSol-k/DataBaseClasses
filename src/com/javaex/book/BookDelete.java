@@ -11,7 +11,7 @@ import java.util.List;
 public class BookDelete {
 
 	public static void main(String[] args) {
-		List<BookVo> bookList = new ArrayList<BookVo>();
+		
 		// 0. import java.sql.*;
 		Connection conn = null;
 		PreparedStatement pstmt = null;

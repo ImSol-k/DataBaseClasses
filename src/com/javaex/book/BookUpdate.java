@@ -27,6 +27,9 @@ public class BookUpdate {
 			int numB = 2;
 			String query = "";
 			query += " update book";
+			query += " set title = ?";
+			query += " set pubs = ?";
+			query += " set pub_date = ?";
 			query += " set author_id = ?";
 			query += " where book_id = ?";
 			pstmt = conn.prepareStatement(query);
