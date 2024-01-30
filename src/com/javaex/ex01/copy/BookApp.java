@@ -1,28 +1,18 @@
-package com.javaex.ex01;
+package com.javaex.ex01.copy;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class BookApp {
 
 	public static void main(String[] args) {
-		
-		AuthorDao author = new AuthorDao();
-		List<AuthorVo> authorList = author.authorList();
+
 		Scanner in = new Scanner(System.in);
 		String authorName, authorDesc;
 		int num;
 		boolean start = true;
-		
-		for(AuthorVo vo : authorList) {
-			int id = vo.getId();
-			String name = vo.getAuthorName();
-			String desc = vo.getAuthorDesc();
-			System.out.println(id + ". " + name + " / " + desc);
-		}
+		AuthorDao author = new AuthorDao();
 
-		/*
+		
 		author.authorSelect();
 		while (start) {
 			System.out.println("==================================================");
@@ -64,7 +54,7 @@ public class BookApp {
 				break;
 
 			}
-		}//while*/
+		}
 		in.close();
 
 	}//main
